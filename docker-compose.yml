@@ -15,12 +15,19 @@ services:
     container_name: postgres
     image: postgres
     ports:
-      - '5439:${DB_PORT}'
+      - '5432:${DB_PORT}'
     volumes:
       - data:/data/db
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+  pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=misterchickaree@gmail.com
+            - PGADMIN_DEFAULT_PASSWORD=0099
+        ports:
+            - "5050:80"
 
 volumes:
  data: {}

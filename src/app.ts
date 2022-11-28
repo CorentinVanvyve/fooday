@@ -22,7 +22,7 @@ const connectToDB = async () => {
 
 connectToDB();
 
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("hi");
   console.log('localhost:5000/test endpoint opened')
 });
