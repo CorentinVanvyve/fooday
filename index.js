@@ -1,27 +1,25 @@
-const express = require('express')
+const express = require('express');
 require('dotenv').config()
+const app = express();
 const bodyParser = require('body-parser')
-const app = express()
-const db = require('./queries')
 const port = process.env.PORT
-
-app.use(bodyParser.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
-
-app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
-})
-
-app.get('/users', db.getUsers)
-app.get('/users/:id', db.getUserById)
-app.post('/users', db.createUser)
-app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
+const userRoutes = require('./src/routes/user');
+const errorController = require('./src/controllers/error');
 
 app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
+  console.log(`App running on port ${port}.`);
+});
+
+app.use(bodyParser.json());
+
+app.use((req,res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
 })
+
+app.use('/users', userRoutes);
+
+app.use(errorController.get404);
+app.use(errorController.get500);
