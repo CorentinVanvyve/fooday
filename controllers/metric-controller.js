@@ -1,41 +1,44 @@
 const db = require("../models");
-const Profile = db.Profile;
+const Metric = db.Metric;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.last_name | !req.body.first_name) {
+  if (!req.body.height
+    | !req.body.weight
+    | !req.body.gender) {
     res.status(400).send({
-      message: "Last name and first name can not be empty!"
+      message: "Height, weight and gender can not be empty!"
     });
     return;
   }
 
   // Create a Profile
-  const profile = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    birthday: req.body.birthday,
+  const metric = {
+    height: req.body.height,
+    weight: req.body.weight,
+    gender: req.body.gender,
     user_id: req.params.user_id
   };
 
   // Save User in the database
-  Profile.create(profile)
+  Metric.create(metric)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the profile."
+          err.message || "Some error occurred while creating the metric."
       });
     });
 };
 
+
 exports.findOne = (req, res) => {
   const user_id = req.params.user_id;
 
-  Profile.findOne(
+  Metric.findOne(
     {
       where: { user_id: user_id }
   })
@@ -44,13 +47,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Profile with user_id=${user_id}.`
+          message: `Cannot find Metric with  user_id=${user_id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Profile with user id=" + user_id
+        message: "Could not delete Metric with user_id=" + user_id
       });
     });
 };
@@ -58,23 +61,23 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const user_id = req.params.user_id;
 
-  Profile.update(req.body, {
+  Metric.update(req.body, {
     where: { user_id: user_id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Profile was updated successfully."
+          message: "Metric was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Profile with user_id=${user_id}. Maybe Profile was not found or req.body is empty!`
+          message: `Cannot update Metric with id=${id} and user_id=${user_id}. Maybe Profile was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: `Cannot updating Profile with  user id=${user_id}.`
+        message: `Cannot updating Metric with user_id=${user_id}.`
       });
     });
 };
@@ -82,24 +85,23 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const user_id = req.params.user_id;
 
-  Profile.destroy({
+  Metric.destroy({
     where: { user_id: user_id }
-
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Profile was deleted successfully!"
+          message: "Metric was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Profile with user_id=${user_id}. Maybe Profile was not found!`
+          message: `Cannot delete Metric with user_id=${user_id}. Maybe Metric was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Profile with user id=" + user_id
+        message: "Could not delete Metric with user_id=" + user_id
       });
     });
 };

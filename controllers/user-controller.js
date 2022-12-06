@@ -10,12 +10,12 @@ exports.create = (req, res) => {
       });
       return;
     }
-  
+
     // Create a User
     const user = {
       phone: req.body.phone
     };
-  
+
     // Save User in the database
     User.create(user)
       .then(data => {
@@ -31,9 +31,9 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const phone = req.query.phone;
-    let condition = phone ? { phone: { [Op.like]: `%${phone}%` } } : null;
-  
-    User.findAll({ where: condition ,
+    //let condition = phone ? { phone: { [Op.like]: `%${phone}%` } } : null;
+
+    User.findAll({ //where: condition ,
         order: [
             ['id', 'ASC']
            ],
@@ -51,7 +51,7 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
     const id = req.params.id;
-  
+
     User.findByPk(id)
       .then(data => {
         if (data) {
@@ -71,7 +71,7 @@ exports.findOne = (req, res) => {
 
   exports.update = (req, res) => {
     const id = req.params.id;
-  
+
     User.update(req.body, {
       where: { id: id }
     })
@@ -95,7 +95,7 @@ exports.findOne = (req, res) => {
 
   exports.delete = (req, res) => {
     const id = req.params.id;
-  
+
     User.destroy({
       where: { id: id }
     })
@@ -116,4 +116,3 @@ exports.findOne = (req, res) => {
         });
       });
   };
-  

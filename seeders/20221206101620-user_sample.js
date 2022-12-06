@@ -3,26 +3,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+
     return await queryInterface.bulkInsert(
-      'Profiles', 
+      'Users',
       [
         {
-         first_name: 'Corentin',
-         last_name: 'Vanvyve',
-         birthday: "1998-11-26T11:26:39.195Z",
-         user_id: 3,
+         phone: '+32489584828',
          createdAt: new Date(),
          updatedAt: new Date()
         },
         {
-          first_name: 'Alice',
-          last_name: 'Dupont',
-          birthday: "1989-10-09T11:26:39.195Z",
-          user_id: 6,
-          createdAt: new Date(),
-          updatedAt: new Date()
-         }
-      ], {});
+         phone: '+32470123456',
+         createdAt: new Date(),
+         updatedAt: new Date()
+        },
+        {
+         phone: '+32479056402',
+         createdAt: new Date(),
+         updatedAt: new Date()
+        },
+        {
+         phone: '+32464383216',
+         createdAt: new Date(),
+         updatedAt: new Date()
+        }
+      ],
+      {});
   },
 
   async down (queryInterface, Sequelize) {

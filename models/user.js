@@ -13,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.Profile, {
         as: 'profile',
-        foreignKey: 'user_id', 
+        foreignKey: 'user_id',
+      }),
+      User.hasOne(models.Metric, {
+        as: 'metric',
+        foreignKey: 'user_id',
       });
     }
   }
