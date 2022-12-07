@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     height: req.body.height,
     weight: req.body.weight,
     gender: req.body.gender,
+    birthday: req.body.birthday,
     user_id: req.params.user_id
   };
 

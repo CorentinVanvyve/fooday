@@ -18,18 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  Metric.maintenanceCalc = function () {
-    let age = new Date().valueOf() - new Date(birthday).valueOf()
-    age = age.getFullYear()
-
-    if (gender === 'M') {
-      return((13.7516 * weight) + (500.33*(height/100))-(6.7550 * age) + 66.473);
-    } else {
-      return((9.5634 * weight) + (184.96*(height/100))-(4.6756 * age) + 655.0955);
-    }
-  };
-
-  Metric.maintenance = maintenanceCalc();
 
   Metric.init({
     weight: {
@@ -59,5 +47,27 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Metric',
   });
+
+  Metric.prototype.maintenanceCalc = function() {
+    const diff_ms = Date.now() - new Date(this.birthday).getTime();
+    const age_dt = new Date(diff_ms);
+
+    const age =  Math.abs(age_dt.getUTCFullYear() - 1970);
+
+    if (this.gender === 'M') {
+      return parseInt((13.7516 * this.weight) + (500.33*(this.height/100))-(6.7550 * age) + 66.473);
+    } else {
+      return parseInt((9.5634 * this.weight) + (184.96*(this.height/100))-(4.6756 * age) + 655.0955);
+    }
+  };
+
+  Metric.beforeCreate(async (metric) => {
+    metric.maintenance = metric.maintenanceCalc();
+  });
+
+  Metric.beforeUpdate(async (metric) => {
+    metric.maintenance = metric.maintenanceCalc();
+  });
+
   return Metric;
 };
