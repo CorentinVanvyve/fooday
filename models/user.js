@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Metric, {
         as: 'metric',
         foreignKey: 'user_id',
+      }),
+      User.hasMany(models.Aliment, {
+        as: 'aliment',
+        foreignKey: 'user_id',
       });
     }
   }

@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Metric.belongsTo(models.User, {
         as: 'user',
-        foreignKey: 'user_id'
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
       });
     }
   }

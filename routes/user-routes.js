@@ -5,6 +5,7 @@ const router = express.Router();
 const userController = require('../controllers/user-controller');
 const metricController = require('../controllers/metric-controller');
 const profileController = require('../controllers/profile-controller');
+const alimentController = require('../controllers/aliment-controller');
 
 // USER CRUD
 router.post("/", userController.create);
@@ -24,6 +25,13 @@ router.get("/:user_id/profile", profileController.findOne);
 router.post("/:user_id/profile", profileController.create);
 router.put("/:user_id/profile", profileController.update);
 router.delete("/:user_id/profile", profileController.delete);
+
+// ALIMENT CRUD
+router.get("/:user_id/aliments", alimentController.findAll);
+router.get("/:user_id/aliment", alimentController.findOne);
+router.post("/:user_id/aliment", alimentController.create);
+router.put("/:user_id/aliment", alimentController.update);
+router.delete("/:user_id/aliment", alimentController.delete);
 
 
 module.exports = router;
