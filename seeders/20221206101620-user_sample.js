@@ -8,21 +8,25 @@ module.exports = {
       'Users',
       [
         {
+          id: 1,
          phone: '+32489584828',
          createdAt: new Date(),
          updatedAt: new Date()
         },
         {
+          id: 2,
          phone: '+32470123456',
          createdAt: new Date(),
          updatedAt: new Date()
         },
         {
+          id: 3,
          phone: '+32479056402',
          createdAt: new Date(),
          updatedAt: new Date()
         },
         {
+          id: 4,
          phone: '+32464383216',
          createdAt: new Date(),
          updatedAt: new Date()

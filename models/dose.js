@@ -1,66 +1,81 @@
 'use strict';
+
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Aliment extends Model {
+  class Dose extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Aliment.belongsTo(models.User, {
+
+      Dose.belongsTo(models.User, {
         as: 'user',
         foreignKey: 'user_id'
       }),
-      Aliment.hasMany(models.Dose, {
-        as: 'dose',
-        foreignKey: 'aliment_id',
+      Dose.belongsTo(models.Dishe, {
+        as: 'dishe',
+        foreignKey: 'dishe_id'
+      }),
+      Dose.belongsTo(models.Aliment, {
+        as: 'aliment',
+        foreignKey: 'aliment_id'
       });
     }
   }
-  Aliment.init({
-    name: {
+
+  Dose.init({
+    gram: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    aliment_name: {
       type: DataTypes.STRING,
       allowNull: true
     },
     kcal: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true
     },
     protein: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true
     },
     saturated_lipid: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true
     },
     unsaturated_lipid: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true
     },
     carbohydrate: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true
     },
     sugar: {
       type: DataTypes.FLOAT,
-      allowNull: false
-    },
-    store_product_link: {
-      type: DataTypes.STRING,
       allowNull: true
     },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    aliment_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    dishe_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     sequelize,
-    modelName: 'Aliment',
+    modelName: 'Dose',
   });
-  return Aliment;
+
+  return Dose;
 };

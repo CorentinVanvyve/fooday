@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       Dishe.belongsTo(models.User, {
         as: 'user',
         foreignKey: 'user_id'
+      }),
+      Dishe.hasMany(models.Dose, {
+        as: 'dose',
+        foreignKey: 'dishe_id',
       });
     }
   }

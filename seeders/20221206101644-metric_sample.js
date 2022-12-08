@@ -13,7 +13,7 @@ module.exports = {
          height: 180,
          birthday: new Date(1998, 11, 17),
          gender: 'M',
-         user_id: 2,
+         user_id: 1,
          createdAt: new Date(),
          updatedAt: new Date()
         },
@@ -22,7 +22,7 @@ module.exports = {
         height: 170,
         birthday: new Date(1990, 11, 17),
         gender: 'F',
-        user_id: 3,
+        user_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
         },
@@ -31,7 +31,7 @@ module.exports = {
           height: 190,
           birthday: new Date(1991, 11, 17),
           gender: 'M',
-          user_id: 4,
+          user_id: 3,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -40,7 +40,7 @@ module.exports = {
           height: 160,
           birthday: new Date(2000, 11, 17),
           gender: 'F',
-          user_id: 5,
+          user_id: 4,
           createdAt: new Date(),
           updatedAt: new Date()
          }
