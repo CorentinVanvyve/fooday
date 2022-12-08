@@ -6,6 +6,7 @@ const userController = require('../controllers/user-controller');
 const metricController = require('../controllers/metric-controller');
 const profileController = require('../controllers/profile-controller');
 const alimentController = require('../controllers/aliment-controller');
+const disheController = require('../controllers/dishe-controller');
 
 // USER CRUD
 router.post("/", userController.create);
@@ -28,10 +29,17 @@ router.delete("/:user_id/profile", profileController.delete);
 
 // ALIMENT CRUD
 router.get("/:user_id/aliments", alimentController.findAll);
-router.get("/:user_id/aliment", alimentController.findOne);
+router.get("/:user_id/aliments/:id", alimentController.findOne);
 router.post("/:user_id/aliment", alimentController.create);
-router.put("/:user_id/aliment", alimentController.update);
-router.delete("/:user_id/aliment", alimentController.delete);
+router.put("/:user_id/aliments/:id", alimentController.update);
+router.delete("/:user_id/aliments/:id", alimentController.delete);
+
+// DISHE CRUD
+router.get("/:user_id/dishes", disheController.findAll);
+router.get("/:user_id/dishes/:id", disheController.findOne);
+router.post("/:user_id/dishe", disheController.create);
+router.put("/:user_id/dishes/:id", disheController.update);
+router.delete("/:user_id/dishes/:id", disheController.delete);
 
 
 module.exports = router;

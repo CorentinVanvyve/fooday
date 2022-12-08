@@ -16,7 +16,7 @@ module.exports = {
          carbohydrate: 4.3,
          sugar: 3.6,
          store_product_link: 'https://fic.colruytgroup.com/productinfo/fr/cogo/4220974',
-         user_id: 25,
+         user_id: 2,
          createdAt: new Date(),
          updatedAt: new Date()
         },
@@ -29,7 +29,7 @@ module.exports = {
           carbohydrate: 0,
           sugar: 1.5,
           store_product_link: 'https://fic.colruytgroup.com/productinfo/fr/cogo/3073024',
-          user_id: 25,
+          user_id: 2,
           createdAt: new Date(),
           updatedAt: new Date()
          }

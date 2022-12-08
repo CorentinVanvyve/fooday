@@ -1,5 +1,5 @@
 const db = require("../models");
-const Aliment = db.Aliment;
+const Dishe = db.Dishe;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -11,8 +11,8 @@ exports.create = (req, res) => {
         return;
     }
 
-  // Create an Aliment
-  const aliment = {
+  // Create an Dishe
+  const dishe = {
     name: req.body.name,
     kcal: req.body.kcal,
     protein: req.body.protein,
@@ -20,19 +20,18 @@ exports.create = (req, res) => {
     unsaturated_lipid: req.body.unsaturated_lipid,
     sugar: req.body.sugar,
     carbohydrate: req.body.carbohydrate,
-    store_product_link: req.body.store_product_link,
     user_id: req.params.user_id
   };
 
   // Save User in the database
-  Aliment.create(aliment)
+  Dishe.create(dishe)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the metric."
+          err.message || "Some error occurred while creating the dishe."
       });
     });
 };
@@ -42,7 +41,7 @@ exports.findOne = (req, res) => {
   const user_id = req.params.user_id;
   const id = req.params.id;
 
-  Aliment.findOne(
+  Dishe.findOne(
     {
         where: {
             user_id: user_id,
@@ -54,7 +53,7 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Aliment with  user_id=${user_id}.`
+          message: `Cannot find Dishe with  user_id=${user_id}.`
         });
       }
     })
@@ -63,7 +62,7 @@ exports.findOne = (req, res) => {
 exports.findAll = (req, res) => {
     const user_id = req.params.user_id;
 
-    Aliment.findAll({
+    Dishe.findAll({
         where: {
             user_id: user_id
           },
@@ -77,7 +76,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving aliments."
+            err.message || "Some error occurred while retrieving Dishes."
         });
       });
 };
@@ -86,7 +85,7 @@ exports.update = (req, res) => {
     const user_id = req.params.user_id;
     const id = req.params.id;
   
-    Aliment.update(req.body, {
+    Dishe.update(req.body, {
       where: { 
         user_id: user_id,
         id: id
@@ -95,17 +94,17 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Aliment was updated successfully."
+            message: "Dishe was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Aliment with user_id=${user_id} and id=${id}. Maybe Aliment was not found or req.body is empty!`
+            message: `Cannot update Dishe with user_id=${user_id} and id=${id}. Maybe Dishe was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: `Cannot updating Aliment with  user id=${user_id} and id=${id}.`
+          message: `Cannot updating Dishe with  user id=${user_id} and id=${id}.`
         });
       });
   };
@@ -114,7 +113,7 @@ exports.delete = (req, res) => {
     const user_id = req.params.user_id;
     const id = req.params.id;
   
-    Aliment.destroy(
+    Dishe.destroy(
       {
           where: {
               user_id: user_id,
@@ -124,17 +123,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Aliment was deleted successfully!"
+          message: "Dishe was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Aliment with user_id=${user_id} and id=${id}. Maybe Aliment was not found!`
+          message: `Cannot delete Dishe with user_id=${user_id} and id=${id}. Maybe Dishe was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: `Could not delete Aliment with user_id=${user_id} and id=${id}`
+        message: `Could not delete Dishe with user_id=${user_id} and id=${id}`
           });
     });
 };
