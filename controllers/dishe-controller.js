@@ -1,6 +1,9 @@
 const db = require("../models");
 const Dishe = db.Dishe;
-const Op = db.Sequelize.Op;
+const Dose = db.Dose;
+// const Op = db.Sequelize.Op;
+
+
 
 exports.create = (req, res) => {
     // Validate request
@@ -84,9 +87,9 @@ exports.findAll = (req, res) => {
 exports.update = (req, res) => {
     const user_id = req.params.user_id;
     const id = req.params.id;
-  
+
     Dishe.update(req.body, {
-      where: { 
+      where: {
         user_id: user_id,
         id: id
     }
@@ -112,7 +115,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const user_id = req.params.user_id;
     const id = req.params.id;
-  
+
     Dishe.destroy(
       {
           where: {

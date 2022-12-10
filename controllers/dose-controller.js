@@ -1,8 +1,38 @@
 const db = require("../models");
 const Dose = db.Dose;
-const Aliment = db.Aliment;
 const Dishe = db.Dishe;
+const Aliment = db.Aliment;
 const Op = db.Sequelize.Op;
+const express = require('express')
+
+async function doseUploaded(dose) {
+  const dishe = {
+    kcal: dose.kcal,
+    protein: dose.protein,
+    saturated_lipid: dose.saturated_lipid,
+    unsaturated_lipid: dose.unsaturated_lipid,
+    sugar: dose.sugar,
+    carbohydrate: dose.carbohydrate
+  };
+
+  const allDoses = await Dose.findAll({ where: {user_id: dose.user_id, dishe_id: dose.dishe_id}}, {raw: true});
+  console.log(allDoses)
+
+  for (let i = 0; i < allDoses.length; i++) {
+    dishe.kcal += allDoses[i]["dataValues"].kcal
+    dishe.protein += allDoses[i]["dataValues"].protein
+    dishe.saturated_lipid += allDoses[i]["dataValues"].saturated_lipid
+    dishe.unsaturated_lipid += allDoses[i]["dataValues"].unsaturated_lipid
+    dishe.sugar += allDoses[i]["dataValues"].sugar
+    dishe.carbohydrate += allDoses[i]["dataValues"].carbohydrate
+  }
+
+  Dishe.update(dishe, {
+    where: {
+      id: dose.dishe_id
+  }
+  });
+}
 
 exports.create = async (req, res) => {
     // Validate request
@@ -49,6 +79,8 @@ exports.create = async (req, res) => {
           err.message || "Some error occurred while creating the dose."
       });
     });
+
+    doseUploaded(dose);
 };
 
 
@@ -56,7 +88,7 @@ exports.findOne = (req, res) => {
     const user_id = req.params.user_id;
     const dishe_id = req.params.dishe_id;
     const id = req.params.id;
-  
+
     Dose.findOne(
       {
           where: {
@@ -75,10 +107,10 @@ exports.findOne = (req, res) => {
         }
       })
   };
-  
+
   exports.findAll = (req, res) => {
       const user_id = req.params.user_id;
-  
+
       Dose.findAll({
           where: {
               user_id: user_id
@@ -128,7 +160,7 @@ exports.findOne = (req, res) => {
     sugar: sugar,
     carbohydrate: carbohydrate
   };
-  
+
     Dose.update(dose, {
         where: {
             user_id: user_id,
@@ -152,15 +184,19 @@ exports.findOne = (req, res) => {
           message: `Cannot updating Dose with  user id=${user_id} and id=${id}.`
         });
       });
+
+      doseUploaded(dose);
   };
 
 
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
     const user_id = req.params.user_id;
     const id = req.params.id;
-    console.log(user_id)
-    console.log(id)
-  
+
+
+    const dose = await Dose.findByPk(id);
+    console.log(dose)
+
     Dose.destroy({
         where: {
             user_id: user_id,
@@ -183,4 +219,21 @@ exports.delete = (req, res) => {
           message: "Could not delete Dose with user_id=" + user_id
         });
       });
+
+      const emptyDose = {
+        id: id,
+        gram: 0,
+        aliment_name: 0,
+        kcal: 0,
+        protein: 0,
+        saturated_lipid: 0,
+        unsaturated_lipid: 0,
+        carbohydrate: 0,
+        sugar: 0,
+        user_id: dose.user_id,
+        aliment_id: dose.aliment_id,
+        dishe_id: dose.dishe_id
+      }
+
+      doseUploaded(emptyDose);
   };
